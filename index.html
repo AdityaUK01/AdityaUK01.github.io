@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aditya Rawat — Data Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0B1F3A;
+  --teal: #0E7C7B;
+  --gold: #C9973A;
+  --light: #F4F6F9;
+  --white: #fff;
+  --muted: #6B7A8D;
+  --border: rgba(11,31,58,0.1);
+  --text: #0B1F3A;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f8f9fb;
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ── CURSOR ── */
+.cursor { position: fixed; width: 10px; height: 10px; background: var(--teal); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s, width 0.3s, height 0.3s, opacity 0.3s; mix-blend-mode: multiply; }
+.cursor-ring { position: fixed; width: 36px; height: 36px; border: 1.5px solid var(--teal); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.15s ease, width 0.3s, height 0.3s, opacity 0.3s; opacity: 0.5; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 18px 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(248,249,251,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  transition: all 0.3s;
+}
+.nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--navy); text-decoration: none; }
+.nav-logo span { color: var(--teal); }
+.nav-links { display: flex; gap: 36px; }
+.nav-links a { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; letter-spacing: 0.5px; transition: color 0.2s; }
+.nav-links a:hover { color: var(--teal); }
+.nav-cta { background: var(--navy); color: #fff; font-size: 12px; font-weight: 600; padding: 9px 20px; border-radius: 6px; text-decoration: none; letter-spacing: 0.5px; transition: background 0.2s, transform 0.2s; }
+.nav-cta:hover { background: var(--teal); transform: translateY(-1px); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 120px 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #0B1F3A 0%, #0a2a4a 50%, #082040 100%);
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(14,124,123,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(14,124,123,0.07) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-glow {
+  position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(14,124,123,0.25) 0%, transparent 70%);
+  right: -100px; top: 50%; transform: translateY(-50%);
+  animation: pulse-glow 4s ease-in-out infinite alternate;
+}
+@keyframes pulse-glow { from { opacity: 0.6; transform: translateY(-50%) scale(1); } to { opacity: 1; transform: translateY(-50%) scale(1.1); } }
+
+.hero-content { position: relative; z-index: 1; max-width: 780px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(14,124,123,0.2); border: 1px solid rgba(14,124,123,0.4);
+  color: #5ecfce; font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 20px; margin-bottom: 28px;
+}
+.badge-dot { width: 6px; height: 6px; background: #5ecfce; border-radius: 50%; animation: blink 1.5s infinite; }
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(52px, 7vw, 88px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  letter-spacing: -2px;
+  margin-bottom: 24px;
+}
+.hero h1 .gold { color: var(--gold); }
+.hero h1 .teal { color: #5ecfce; }
+
+.hero-sub {
+  font-size: 18px; line-height: 1.7;
+  color: rgba(255,255,255,0.65);
+  max-width: 560px; margin-bottom: 44px;
+  font-weight: 300;
+}
+.hero-sub strong { color: rgba(255,255,255,0.9); font-weight: 500; }
+
+.hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--teal); color: #fff;
+  padding: 14px 32px; border-radius: 8px;
+  font-weight: 600; font-size: 14px; text-decoration: none;
+  transition: all 0.2s; letter-spacing: 0.3px;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover { background: #0a9190; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(14,124,123,0.4); }
+.btn-outline {
+  border: 1.5px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.85);
+  padding: 14px 32px; border-radius: 8px;
+  font-weight: 500; font-size: 14px; text-decoration: none;
+  transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-outline:hover { border-color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.06); transform: translateY(-2px); }
+
+.hero-stats {
+  position: absolute; right: 60px; bottom: 80px; z-index: 1;
+  display: flex; gap: 40px;
+}
+.stat { text-align: center; }
+.stat-num { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; color: #fff; display: block; }
+.stat-label { font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 1.5px; text-transform: uppercase; }
+
+/* ── SCROLL INDICATOR ── */
+.scroll-hint {
+  position: absolute; bottom: 32px; left: 60px; z-index: 1;
+  display: flex; align-items: center; gap: 12px;
+  color: rgba(255,255,255,0.4); font-size: 12px; letter-spacing: 1px;
+}
+.scroll-line { width: 40px; height: 1px; background: rgba(255,255,255,0.2); }
+
+/* ── SECTIONS ── */
+section { padding: 100px 60px; }
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 800; color: var(--navy);
+  letter-spacing: -1.5px; line-height: 1.1;
+  margin-bottom: 20px;
+}
+.section-sub { font-size: 17px; color: var(--muted); max-width: 520px; line-height: 1.7; font-weight: 300; margin-bottom: 60px; }
+
+/* ── ABOUT ── */
+.about { background: #fff; }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.about-text p { font-size: 16px; line-height: 1.8; color: #445; margin-bottom: 20px; }
+.about-text p strong { color: var(--navy); font-weight: 600; }
+.about-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.acard {
+  padding: 24px; border-radius: 12px;
+  border: 1px solid var(--border);
+  transition: all 0.3s;
+}
+.acard:hover { border-color: var(--teal); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(14,124,123,0.1); }
+.acard-icon { font-size: 24px; margin-bottom: 12px; }
+.acard-title { font-weight: 700; font-size: 14px; color: var(--navy); margin-bottom: 6px; }
+.acard-sub { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+/* ── SKILLS ── */
+.skills { background: var(--navy); }
+.skills .section-title { color: #fff; }
+.skills .section-sub { color: rgba(255,255,255,0.5); }
+.skills .section-label { color: #5ecfce; }
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+.skill-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px; padding: 28px;
+  transition: all 0.3s;
+  cursor: default;
+}
+.skill-card:hover { background: rgba(14,124,123,0.15); border-color: rgba(14,124,123,0.4); transform: translateY(-4px); }
+.skill-card-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 20px;
+}
+.skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.skill-tag {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.8);
+  font-size: 12px; font-weight: 500;
+  padding: 5px 12px; border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: all 0.2s;
+}
+.skill-tag:hover { background: var(--teal); color: #fff; border-color: var(--teal); }
+.skill-tag.primary { background: rgba(14,124,123,0.3); border-color: rgba(14,124,123,0.5); color: #5ecfce; }
+
+/* ── PROJECTS ── */
+.projects { background: #f8f9fb; }
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(440px, 1fr)); gap: 28px; }
+.project-card {
+  background: #fff;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: all 0.35s;
+  position: relative;
+}
+.project-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(11,31,58,0.12); border-color: rgba(14,124,123,0.3); }
+.project-header {
+  padding: 32px 32px 24px;
+  background: linear-gradient(135deg, var(--navy) 0%, #132d4f 100%);
+  position: relative; overflow: hidden;
+}
+.project-header::after {
+  content: '';
+  position: absolute; right: -30px; top: -30px;
+  width: 140px; height: 140px;
+  background: rgba(14,124,123,0.2);
+  border-radius: 50%;
+}
+.project-num {
+  font-family: 'Syne', sans-serif; font-size: 64px; font-weight: 800;
+  color: rgba(255,255,255,0.06); position: absolute; right: 24px; top: 16px;
+  line-height: 1;
+}
+.project-name {
+  font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800;
+  color: #fff; margin-bottom: 12px; line-height: 1.2; position: relative; z-index: 1;
+}
+.project-tags { display: flex; flex-wrap: wrap; gap: 6px; position: relative; z-index: 1; }
+.project-tag {
+  background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; padding: 3px 10px; border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.project-body { padding: 28px 32px; }
+.project-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--teal); font-size: 12px; font-weight: 600;
+  text-decoration: none; margin-bottom: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  transition: gap 0.2s;
+}
+.project-link:hover { gap: 10px; }
+.project-bullets { list-style: none; }
+.project-bullets li {
+  font-size: 14px; color: #556; line-height: 1.6;
+  padding: 6px 0; padding-left: 16px; position: relative;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.project-bullets li::before {
+  content: '▸'; position: absolute; left: 0;
+  color: var(--teal); font-size: 12px;
+}
+.project-bullets li strong { color: var(--navy); font-weight: 600; }
+
+/* ── EDUCATION ── */
+.education { background: #fff; }
+.edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.edu-card {
+  padding: 28px; border-radius: 16px;
+  border-top: 3px solid var(--teal);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  transition: all 0.3s;
+}
+.edu-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(14,124,123,0.1); }
+.edu-degree { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px; color: var(--navy); margin-bottom: 8px; line-height: 1.3; }
+.edu-school { font-size: 13px; color: var(--muted); margin-bottom: 12px; line-height: 1.5; }
+.edu-year { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--teal); font-weight: 600; letter-spacing: 1px; }
+
+/* ── CERTIFICATIONS ── */
+.certs { background: var(--light); }
+.cert-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 800px; }
+.cert-card {
+  background: #fff; border-radius: 16px; padding: 28px;
+  border: 1px solid var(--border);
+  display: flex; gap: 20px; align-items: flex-start;
+  transition: all 0.3s;
+}
+.cert-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(11,31,58,0.1); border-color: rgba(14,124,123,0.3); }
+.cert-logo { width: 52px; height: 52px; border-radius: 10px; object-fit: contain; background: #f8f9fb; padding: 4px; flex-shrink: 0; }
+.cert-name { font-weight: 700; font-size: 15px; color: var(--navy); margin-bottom: 4px; }
+.cert-meta { font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px; }
+.cert-tags { font-size: 12px; color: #667; line-height: 1.5; }
+
+/* ── CONTACT ── */
+.contact {
+  background: var(--navy);
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.contact .section-title { color: #fff; }
+.contact .section-label { color: #5ecfce; }
+.contact-sub { font-size: 18px; color: rgba(255,255,255,0.55); max-width: 480px; margin: 0 auto 48px; line-height: 1.7; font-weight: 300; }
+.contact-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+.contact-link {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 28px; border-radius: 10px;
+  font-weight: 600; font-size: 14px; text-decoration: none;
+  transition: all 0.25s; border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.85);
+}
+.contact-link:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); border-color: rgba(255,255,255,0.3); }
+.contact-link.primary { background: var(--teal); border-color: var(--teal); color: #fff; }
+.contact-link.primary:hover { background: #0a9190; box-shadow: 0 8px 24px rgba(14,124,123,0.5); }
+.contact-bg-glow {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+  width: 800px; height: 400px;
+  background: radial-gradient(ellipse, rgba(14,124,123,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: #070f1c; padding: 28px 60px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+footer p { font-size: 12px; color: rgba(255,255,255,0.3); font-family: 'JetBrains Mono', monospace; }
+
+/* ── ANIMATIONS ── */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── SCROLL PROGRESS ── */
+.scroll-progress { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(90deg, var(--teal), var(--gold)); z-index: 200; transition: width 0.1s; }
+
+@media (max-width: 768px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  section { padding: 70px 24px; }
+  .hero { padding: 100px 24px 80px; }
+  .hero-stats { right: 24px; bottom: 60px; gap: 24px; }
+  .about-grid { grid-template-columns: 1fr; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .edu-grid { grid-template-columns: 1fr; }
+  .cert-grid { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 12px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="ring"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">AR<span>.</span></a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="mailto:adityarawat9917@gmail.com" class="nav-cta">Hire Me →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Available for Immediate Joining
+    </div>
+    <h1>
+      Aditya<br>
+      <span class="gold">Rawat</span>
+    </h1>
+    <p class="hero-sub">
+      <strong>Data Engineer</strong> building scalable <strong>ETL/ELT pipelines</strong>,
+      cloud <strong>data lakes</strong> & <strong>data warehouses</strong> using
+      Python, Apache Airflow, PySpark & AWS.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">View Projects →</a>
+      <a href="mailto:adityarawat9917@gmail.com" class="btn-outline">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">2</span><span class="stat-label">Projects</span></div>
+    <div class="stat"><span class="stat-num">90%</span><span class="stat-label">Time Saved</span></div>
+    <div class="stat"><span class="stat-num">3×</span><span class="stat-label">Query Speed</span></div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about reveal" id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <p class="section-label">About Me</p>
+      <h2 class="section-title">Building data<br>pipelines that scale.</h2>
+      <p>I'm a <strong>BCA graduate</strong> from Kumaun University, Delhi-based and actively seeking entry-level Data Engineering roles. I specialize in designing automated, production-grade data systems that turn raw data into business-ready insights.</p>
+      <p>My work spans the full data stack — from ingestion and transformation to warehousing and visualization — using modern tools like <strong>Apache Airflow, PySpark, dbt</strong> and the AWS ecosystem.</p>
+      <div style="margin-top: 32px;">
+        <a href="mailto:adityarawat9917@gmail.com" class="btn-primary" style="background:var(--navy);">Let's Talk →</a>
+      </div>
+    </div>
+    <div class="about-cards">
+      <div class="acard">
+        <div class="acard-icon">⚡</div>
+        <div class="acard-title">ETL Automation</div>
+        <div class="acard-sub">Reduced manual data refresh time by 90% through automated Airflow pipelines.</div>
+      </div>
+      <div class="acard">
+        <div class="acard-icon">☁️</div>
+        <div class="acard-title">AWS Cloud</div>
+        <div class="acard-sub">S3, Glue, Redshift, Athena — full AWS data stack experience.</div>
+      </div>
+      <div class="acard">
+        <div class="acard-icon">🔥</div>
+        <div class="acard-title">Big Data</div>
+        <div class="acard-sub">PySpark pipelines processing 100K+ daily records with Parquet optimization.</div>
+      </div>
+      <div class="acard">
+        <div class="acard-icon">📊</div>
+        <div class="acard-title">3× Query Speed</div>
+        <div class="acard-sub">Partitioning & Parquet optimization cut S3 costs by 70%.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills reveal" id="skills">
+  <p class="section-label">Technical Skills</p>
+  <h2 class="section-title" style="color:#fff;">My Tech Stack</h2>
+  <p class="section-sub">Tools and technologies I use to build reliable, scalable data systems.</p>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-card-title">Languages</div>
+      <div class="skill-tags">
+        <span class="skill-tag primary">Python</span>
+        <span class="skill-tag primary">SQL</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">Data Engineering</div>
+      <div class="skill-tags">
+        <span class="skill-tag primary">ETL / ELT</span>
+        <span class="skill-tag">Data Pipelines</span>
+        <span class="skill-tag">Data Validation</span>
+        <span class="skill-tag">Batch Processing</span>
+        <span class="skill-tag">Star Schema</span>
+        <span class="skill-tag">Dimensional Modeling</span>
+        <span class="skill-tag">Data Warehousing</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">Orchestration</div>
+      <div class="skill-tags">
+        <span class="skill-tag primary">Apache Airflow</span>
+        <span class="skill-tag">DAGs</span>
+        <span class="skill-tag">Scheduling</span>
+        <span class="skill-tag">Task Dependencies</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">Cloud & Big Data</div>
+      <div class="skill-tags">
+        <span class="skill-tag primary">AWS S3</span>
+        <span class="skill-tag primary">Amazon Redshift</span>
+        <span class="skill-tag primary">PySpark</span>
+        <span class="skill-tag">Apache Spark</span>
+        <span class="skill-tag">Parquet</span>
+        <span class="skill-tag">Query Optimization</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">Libraries & Databases</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Pandas</span>
+        <span class="skill-tag">NumPy</span>
+        <span class="skill-tag">MySQL</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">Tools & BI</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">GitHub</span>
+        <span class="skill-tag">Power BI</span>
+        <span class="skill-tag">ChatGPT</span>
+        <span class="skill-tag">Claude AI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects reveal" id="projects">
+  <p class="section-label">Work</p>
+  <h2 class="section-title">Featured Projects</h2>
+  <p class="section-sub">End-to-end data engineering systems built from scratch.</p>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-num">01</div>
+        <div class="project-name">Retail Sales Data Warehouse</div>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">Apache Airflow</span>
+          <span class="project-tag">AWS S3</span>
+          <span class="project-tag">MySQL</span>
+          <span class="project-tag">Pandas</span>
+          <span class="project-tag">ETL Pipeline</span>
+        </div>
+      </div>
+      <div class="project-body">
+        <a href="https://github.com/AdityaUK01/retail-sales-data-pipeline" target="_blank" class="project-link">↗ github.com/AdityaUK01/retail-sales-data-pipeline</a>
+        <ul class="project-bullets">
+  <li>Designed and implemented an ETL pipeline to process 10K+ records from MySQL to AWS S3</li>
+  <li>Performed data cleaning and transformation (null handling, deduplication, type casting) to ensure data consistency</li>
+  <li>Automated daily batch workflows using Apache Airflow DAGs with task dependencies and retry logic</li>
+  <li>Stored processed data in AWS S3 following structured storage practices for downstream analytics</li>
+  <li>Implemented data validation checks to enforce schema consistency across pipeline runs</li>
+  <li>Optimized pipeline reliability by handling failures and retries within Airflow tasks</li>
+  <li>Ensured modular pipeline design using Python scripts for scalable and reusable data processing</li>
+</ul>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-num">02</div>
+        <div class="project-name">E-Commerce Data Lake & Analytics Pipeline</div>
+        <div class="project-tags">
+          <span class="project-tag">PySpark</span>
+          <span class="project-tag">Apache Spark</span>
+          <span class="project-tag">AWS S3</span>
+          <span class="project-tag">Redshift</span>
+          <span class="project-tag">Airflow</span>
+          <span class="project-tag">Parquet</span>
+          <span class="project-tag">SQL</span>
+        </div>
+      </div>
+      <div class="project-body">
+        <a href="https://github.com/AdityaUK01/ecommerce-data-pipeline" target="_blank" class="project-link">↗ github.com/AdityaUK01/ecommerce-data-pipeline</a>
+        <ul class="project-bullets">
+  <li>Built a data lake architecture (Raw → Cleaned → Curated) on AWS S3 to manage structured e-commerce data</li>
+  <li>Processed 20K+ records using PySpark, applying transformations such as filtering, joins, and aggregations</li>
+  <li>Stored transformed data in Parquet format to enable efficient columnar storage and faster query performance</li>
+  <li>Designed star schema (fact and dimension tables) in Amazon Redshift for analytical querying</li>
+  <li>Implemented data partitioning to reduce query scan time and improve performance</li>
+  <li>Automated end-to-end pipeline using Apache Airflow DAGs with scheduling, retries, and task dependencies</li>
+  <li>Performed data validation checks (schema enforcement, null handling) to ensure data quality and consistency</li>
+  <li>Supported incremental data processing to handle batch updates efficiently</li>
+</ul>
+      </div>
+    </div>
+
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-num">03</div>
+        <div class="project-name">CO₂ Emissions Analysis Pipeline</div>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">Pandas</span>
+          <span class="project-tag">NumPy</span>
+          <span class="project-tag">Matplotlib</span>
+          <span class="project-tag">Seaborn</span>
+          <span class="project-tag">SQL</span>
+          <span class="project-tag">EDA</span>
+          <span class="project-tag">Data Visualization</span>
+        </div>
+      </div>
+      <div class="project-body">
+        <a href="https://github.com/AdityaUK01/CO2_Emissions" target="_blank" class="project-link">↗ https://github.com/AdityaUK01/CO2_Emissions</a>
+        <ul class="project-bullets">
+          <li>Analyzed global <strong>CO₂ emissions data</strong> (~20K records) to identify trends, patterns, and top contributing countries using Python & Pandas.</li>
+          <li>Performed comprehensive <strong>data cleaning</strong> — handling missing values, standardizing formats, resolving inconsistencies across multi-year country datasets.</li>
+          <li>Conducted <strong>time-series exploration</strong> and <strong>SQL-based analysis</strong> to track emission changes and year-over-year growth trends.</li>
+          <li>Created <strong>data visualizations</strong> using Matplotlib & Seaborn representing global emission patterns and cross-country comparisons.</li>
+          <li>Derived key insights on top emitting countries and global trends through <strong>Exploratory Data Analysis (EDA)</strong>.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="education reveal" id="education">
+  <p class="section-label">Education</p>
+  <h2 class="section-title">Academic Background</h2>
+  <p class="section-sub">Foundation in computer science with a focus on software systems.</p>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-degree">Bachelor of Computer Applications (BCA)</div>
+      <div class="edu-school">SIMT Kashipur, Kumaun University, Nainital</div>
+      <div class="edu-year">2021 – 2024</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">12th — PCM</div>
+      <div class="edu-school">Uttarakhand Board</div>
+      <div class="edu-year">2020 – 2021</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">10th</div>
+      <div class="edu-school">Uttarakhand Board</div>
+      <div class="edu-year">2018 – 2019</div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="certs reveal" id="certs">
+  <p class="section-label">Certifications</p>
+  <h2 class="section-title">Credentials</h2>
+  <p class="section-sub">Verified skills in data engineering and cloud technologies.</p>
+  <div class="cert-grid">
+    <div class="cert-card">
+      <img src="data:image/png;base64,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" class="cert-logo" alt="ExcelR">
+      <div>
+        <div class="cert-name">Data Science Certification</div>
+        <div class="cert-meta">ExcelR · 2024–2025</div>
+        <div class="cert-tags">Python, SQL, ETL Design, Apache Spark, AWS. Capstone: CO2 Emissions Analysis Pipeline.</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <img src="data:image/png;base64,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" class="cert-logo" alt="Coursera">
+      <div>
+        <div class="cert-name">Introduction to Data Engineering</div>
+        <div class="cert-meta">Coursera · 2025</div>
+        <div class="cert-tags">ETL/ELT principles, data pipeline architecture, cloud data workflows using Python & SQL.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact reveal" id="contact">
+  <div class="contact-bg-glow"></div>
+  <p class="section-label" style="position:relative;">Contact</p>
+  <h2 class="section-title" style="position:relative;">Let's Build<br>Something Great.</h2>
+  <p class="contact-sub" style="position:relative;">Open to entry-level Data Engineer roles. Available immediately for on-site, remote or hybrid positions across India.</p>
+  <div class="contact-links" style="position:relative;">
+    <a href="mailto:adityarawat9917@gmail.com" class="contact-link primary">✉ adityarawat9917@gmail.com</a>
+    <a href="https://linkedin.com/in/aditya-rawat-b6635521a" target="_blank" class="contact-link">in LinkedIn</a>
+    <a href="https://github.com/AdityaUK01" target="_blank" class="contact-link">⌥ GitHub</a>
+    <a href="tel:+918979693801" class="contact-link">📞 +91-8979693801</a>
+    <a href="https://docs.google.com/document/d/1ZdU2bwm23RNYG59FzLivmocJaK4UhmVu/edit?usp=sharing&ouid=117595194692637854707&rtpof=true&sd=true" download class="contact-link" style="background:var(--gold);border-color:var(--gold);color:#fff;">⬇ Download Resume</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Aditya Rawat — Data Engineer</p>
+  <p>Delhi, India · Available for immediate joining</p>
+</footer>
+
+<script>
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('ring');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+  setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 80);
+});
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; ring.style.width = '50px'; ring.style.height = '50px'; });
+  el.addEventListener('mouseleave', () => { cursor.style.width = '10px'; cursor.style.height = '10px'; ring.style.width = '36px'; ring.style.height = '36px'; });
+});
+
+window.addEventListener('scroll', () => {
+  const prog = document.getElementById('progress');
+  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  prog.style.width = pct + '%';
+});
+
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); } });
+}, { threshold: 0.1 });
+reveals.forEach(r => obs.observe(r));
+
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 60) nav.style.boxShadow = '0 4px 24px rgba(11,31,58,0.08)';
+  else nav.style.boxShadow = 'none';
+});
+
+const counters = document.querySelectorAll('.stat-num');
+counters.forEach(c => {
+  const target = c.textContent;
+  c.textContent = '0';
+  setTimeout(() => { c.textContent = target; }, 600);
+});
+</script>
+</body>
+</html>
