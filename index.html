@@ -39,6 +39,7 @@
       justify-content: space-between;
       padding: 0 2.5rem;
       height: 60px;
+      gap: 1rem;
     }
 
     .nav-logo {
@@ -47,17 +48,17 @@
       color: #fff;
       letter-spacing: -0.02em;
       text-decoration: none;
+      flex-shrink: 0;
     }
-
     .nav-logo span { color: var(--primary); }
 
-    .nav-links {
+    .nav-center {
       display: flex;
       gap: 2rem;
       list-style: none;
     }
 
-    .nav-links a {
+    .nav-center a {
       color: #9CA3AF;
       text-decoration: none;
       font-size: 0.875rem;
@@ -66,8 +67,27 @@
       letter-spacing: 0.06em;
       transition: color 0.2s;
     }
+    .nav-center a:hover { color: #fff; }
 
-    .nav-links a:hover { color: #fff; }
+    .nav-resume-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--primary);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0 1rem;
+      height: 36px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .nav-resume-btn:hover { background: #2563EB; transform: scale(1.05); }
 
     /* ── HERO ── */
     #hero {
@@ -80,27 +100,16 @@
       padding-top: 60px;
     }
 
-    /* Geometric BG decorations */
-    .hero-deco {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.06);
-    }
+    .hero-deco { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.06); }
     .hero-deco-1 { width: 600px; height: 600px; top: -200px; right: -200px; }
     .hero-deco-2 { width: 300px; height: 300px; bottom: -100px; left: -100px; }
     .hero-deco-3 {
-      width: 200px; height: 200px;
-      bottom: 80px; right: 160px;
-      border-radius: 0;
-      transform: rotate(45deg);
-      background: rgba(255,255,255,0.04);
+      width: 200px; height: 200px; bottom: 80px; right: 160px;
+      border-radius: 0; transform: rotate(45deg); background: rgba(255,255,255,0.04);
     }
     .hero-deco-4 {
-      width: 120px; height: 120px;
-      top: 120px; left: 40%;
-      border-radius: 0;
-      transform: rotate(20deg);
-      background: rgba(255,255,255,0.05);
+      width: 120px; height: 120px; top: 120px; left: 40%;
+      border-radius: 0; transform: rotate(20deg); background: rgba(255,255,255,0.05);
     }
 
     .hero-inner {
@@ -135,7 +144,7 @@
 
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.6; transform: scale(1.3); }
+      50%       { opacity: 0.6; transform: scale(1.3); }
     }
 
     h1 {
@@ -146,7 +155,6 @@
       line-height: 1.05;
       margin-bottom: 1.5rem;
     }
-
     h1 span { color: rgba(255,255,255,0.35); }
 
     .hero-sub {
@@ -154,7 +162,6 @@
       color: rgba(255,255,255,0.75);
       max-width: 560px;
       margin-bottom: 2.5rem;
-      font-weight: 400;
     }
 
     .hero-meta {
@@ -172,7 +179,6 @@
       font-size: 0.9rem;
       font-weight: 500;
     }
-
     .hero-meta-item svg { opacity: 0.7; }
 
     .hero-ctas {
@@ -199,11 +205,11 @@
       transition: all 0.2s;
     }
 
-    .btn-white {
-      background: #fff;
-      color: var(--primary);
-    }
+    .btn-white { background: #fff; color: var(--primary); }
     .btn-white:hover { background: var(--muted); transform: scale(1.05); }
+
+    .btn-accent { background: var(--accent); color: #111827; }
+    .btn-accent:hover { background: #D97706; transform: scale(1.05); }
 
     .btn-outline {
       background: transparent;
@@ -246,7 +252,6 @@
 
     /* ── SKILLS ── */
     #skills { background: var(--muted); }
-
     .skills-label { color: var(--primary); }
 
     .skills-grid {
@@ -262,7 +267,6 @@
       cursor: default;
       transition: all 0.2s;
     }
-
     .skill-card:hover { transform: scale(1.02); }
 
     .skill-icon {
@@ -273,7 +277,6 @@
       justify-content: center;
       margin-bottom: 1.25rem;
     }
-
     .skill-icon svg { transition: transform 0.2s; }
     .skill-card:hover .skill-icon svg { transform: scale(1.1); }
 
@@ -292,11 +295,7 @@
       letter-spacing: -0.01em;
     }
 
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
     .tag {
       font-size: 0.72rem;
@@ -309,7 +308,6 @@
 
     /* ── PROJECTS ── */
     #projects { background: #fff; }
-
     .projects-label { color: var(--secondary); }
 
     .projects-grid {
@@ -318,9 +316,7 @@
       gap: 2rem;
     }
 
-    @media (max-width: 700px) {
-      .projects-grid { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 700px) { .projects-grid { grid-template-columns: 1fr; } }
 
     .project-card {
       border-radius: 8px;
@@ -330,9 +326,7 @@
       position: relative;
       overflow: hidden;
     }
-
     .project-card:hover { transform: scale(1.02); }
-
     .project-card-1 { background: #EFF6FF; }
     .project-card-2 { background: #ECFDF5; }
 
@@ -349,8 +343,7 @@
       line-height: 1;
       opacity: 0.08;
       position: absolute;
-      top: 1rem;
-      right: 1.5rem;
+      top: 1rem; right: 1.5rem;
       letter-spacing: -0.04em;
       pointer-events: none;
     }
@@ -371,8 +364,7 @@
       padding: 0.3rem 0.75rem;
       border-radius: 99px;
     }
-
-    .badge-blue { background: #BFDBFE; color: #1D4ED8; }
+    .badge-blue  { background: #BFDBFE; color: #1D4ED8; }
     .badge-green { background: #A7F3D0; color: #065F46; }
 
     .project-card h3 {
@@ -383,12 +375,7 @@
       line-height: 1.2;
     }
 
-    .project-stack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-bottom: 1.25rem;
-    }
+    .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
 
     .stack-tag {
       font-size: 0.7rem;
@@ -406,14 +393,12 @@
       gap: 0.5rem;
       margin-bottom: 1.5rem;
     }
-
     .project-bullets li {
       font-size: 0.875rem;
       color: #374151;
       padding-left: 1.25rem;
       position: relative;
     }
-
     .project-bullets li::before {
       content: '▸';
       position: absolute;
@@ -422,7 +407,6 @@
       top: 0.15em;
       opacity: 0.5;
     }
-
     .project-bullets li strong { font-weight: 700; }
 
     .project-link {
@@ -436,10 +420,77 @@
       text-decoration: none;
       transition: gap 0.2s;
     }
-
     .project-card-1 .project-link { color: var(--primary); }
     .project-card-2 .project-link { color: var(--secondary); }
     .project-link:hover { gap: 0.75rem; }
+
+    /* ── RESUME CTA BAND (mid-page) ── */
+    #resume-cta {
+      background: var(--accent);
+      padding: 3.5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .resume-cta-deco {
+      position: absolute;
+      background: rgba(255,255,255,0.12);
+      border-radius: 50%;
+    }
+    .resume-cta-deco-1 { width: 260px; height: 260px; top: -120px; left: -80px; }
+    .resume-cta-deco-2 {
+      width: 160px; height: 160px;
+      bottom: -60px; right: 120px;
+      border-radius: 0;
+      transform: rotate(30deg);
+    }
+
+    .resume-cta-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .resume-cta-text h2 {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 800;
+      color: var(--fg);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+
+    .resume-cta-text p {
+      font-size: 0.95rem;
+      color: rgba(17,24,39,0.65);
+      font-weight: 500;
+    }
+
+    .resume-dl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--fg);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0 2rem;
+      height: 54px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .resume-dl-btn:hover { background: #1F2937; transform: scale(1.05); }
 
     /* ── CERTIFICATIONS ── */
     #certifications { background: var(--fg); }
@@ -451,7 +502,7 @@
     .certs-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 1.5rem;
+      gap: 2rem;
     }
 
     .cert-card {
@@ -459,54 +510,166 @@
       border-radius: 8px;
       padding: 2rem;
       transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
     }
-
     .cert-card:hover { background: rgba(255,255,255,0.09); transform: scale(1.02); }
 
-    .cert-icon {
-      width: 52px; height: 52px;
-      border-radius: 50%;
+    /* Company logo strip */
+    .cert-logo-strip {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cert-company-logo {
+      height: 36px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 1.25rem;
+      padding: 0 0.75rem;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: -0.01em;
+      flex-shrink: 0;
+    }
+
+    .logo-excelr {
+      background: transparent;
+      padding: 0 0.5rem;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+    }
+
+    .logo-excelr img {
+      height: 22px;
+      width: auto;
+      display: block;
+    }
+
+    .logo-coursera {
+      background: #0056D2;
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .cert-year-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.25rem 0.65rem;
+      border-radius: 99px;
+      background: rgba(245,158,11,0.15);
+      color: var(--accent);
     }
 
     .cert-card h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
+      font-size: 1.1rem;
+      font-weight: 800;
       color: #fff;
       margin-bottom: 0.35rem;
       letter-spacing: -0.01em;
+      line-height: 1.2;
     }
 
     .cert-issuer {
       font-size: 0.8rem;
       font-weight: 500;
       color: #9CA3AF;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
     }
 
-    .cert-desc {
-      font-size: 0.825rem;
+    .cert-topics-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
       color: #6B7280;
-      line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+
+    .cert-topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .cert-topic-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.08);
+      color: #D1D5DB;
+    }
+
+    .cert-highlights {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .cert-highlights li {
+      font-size: 0.825rem;
+      color: #9CA3AF;
+      padding-left: 1.2rem;
+      position: relative;
+      line-height: 1.45;
+    }
+    .cert-highlights li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      font-size: 0.65rem;
+      top: 0.2em;
+      color: var(--accent);
+    }
+    .cert-highlights li strong { color: #E5E7EB; font-weight: 600; }
+
+    .cert-capstone {
+      background: rgba(245,158,11,0.1);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 0.65rem 0.9rem;
+    }
+
+    .cert-capstone-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.2rem;
+    }
+
+    .cert-capstone-title {
+      font-size: 0.825rem;
+      color: #E5E7EB;
+      font-weight: 600;
     }
 
     /* ── ABOUT / AVAILABILITY ── */
-    #about { background: var(--secondary); position: relative; overflow: hidden; }
-
-    .about-deco {
-      position: absolute;
-      background: rgba(255,255,255,0.07);
-      border-radius: 50%;
+    #about {
+      background: var(--secondary);
+      position: relative;
+      overflow: hidden;
     }
+
+    .about-deco { position: absolute; background: rgba(255,255,255,0.07); border-radius: 50%; }
     .about-deco-1 { width: 400px; height: 400px; top: -200px; right: -100px; }
     .about-deco-2 {
-      width: 180px; height: 180px;
-      bottom: -60px; left: 60px;
-      border-radius: 0;
-      transform: rotate(30deg);
+      width: 180px; height: 180px; bottom: -60px; left: 60px;
+      border-radius: 0; transform: rotate(30deg);
     }
 
     .about-inner {
@@ -518,9 +681,7 @@
       align-items: center;
     }
 
-    @media (max-width: 760px) {
-      .about-inner { grid-template-columns: 1fr; gap: 2rem; }
-    }
+    @media (max-width: 760px) { .about-inner { grid-template-columns: 1fr; gap: 2rem; } }
 
     #about .section-label { color: rgba(255,255,255,0.7); }
     #about .section-title { color: #fff; margin-bottom: 1rem; }
@@ -583,20 +744,11 @@
       color: #fff;
       letter-spacing: -0.02em;
     }
-
     .footer-brand span { color: var(--primary); }
 
-    .footer-tagline {
-      font-size: 0.875rem;
-      color: #4B5563;
-      margin-top: 0.4rem;
-    }
+    .footer-tagline { font-size: 0.875rem; color: #4B5563; margin-top: 0.4rem; }
 
-    .footer-links {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
+    .footer-links { display: flex; gap: 1rem; flex-wrap: wrap; }
 
     .footer-link {
       display: flex;
@@ -610,12 +762,12 @@
       transition: all 0.2s;
     }
 
-    .footer-link-gh { background: rgba(255,255,255,0.08); color: #fff; }
-    .footer-link-gh:hover { background: rgba(255,255,255,0.14); transform: scale(1.05); }
-
-    .footer-link-li { background: var(--primary); color: #fff; }
-    .footer-link-li:hover { background: #2563EB; transform: scale(1.05); }
-
+    .footer-link-gh   { background: rgba(255,255,255,0.08); color: #fff; }
+    .footer-link-gh:hover   { background: rgba(255,255,255,0.14); transform: scale(1.05); }
+    .footer-link-li   { background: var(--primary); color: #fff; }
+    .footer-link-li:hover   { background: #2563EB; transform: scale(1.05); }
+    .footer-link-dl   { background: var(--accent); color: var(--fg); }
+    .footer-link-dl:hover   { background: #D97706; transform: scale(1.05); }
     .footer-link-mail { background: rgba(255,255,255,0.05); color: #9CA3AF; }
     .footer-link-mail:hover { background: rgba(255,255,255,0.1); color: #fff; transform: scale(1.05); }
 
@@ -665,11 +817,12 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 640px) {
       nav { padding: 0 1.25rem; }
-      .nav-links { display: none; }
+      .nav-center { display: none; }
       .hero-inner { padding: 4rem 1.25rem; }
       .container { padding: 0 1.25rem; }
       .hero-ctas { flex-direction: column; }
       .btn { justify-content: center; }
+      .resume-cta-inner { flex-direction: column; }
       .about-stats { grid-template-columns: 1fr 1fr; }
       .footer-top { flex-direction: column; }
       .footer-bottom { flex-direction: column; text-align: center; }
@@ -678,355 +831,484 @@
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <a href="#hero" class="nav-logo">AR<span>.</span></a>
-    <ul class="nav-links">
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#certifications">Certs</a></li>
-      <li><a href="#about">About</a></li>
-    </ul>
-  </nav>
+<!-- ════════════════════ NAV ════════════════════ -->
+<nav>
+  <a href="#hero" class="nav-logo">AR<span>.</span></a>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-deco hero-deco-1"></div>
-    <div class="hero-deco hero-deco-2"></div>
-    <div class="hero-deco hero-deco-3"></div>
-    <div class="hero-deco hero-deco-4"></div>
+  <ul class="nav-center">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
 
-    <div class="hero-inner">
-      <div class="hero-badge">
-        <span class="hero-badge-dot"></span>
-        Available for immediate joining
+  <a href="https://docs.google.com/document/d/14myDTssKiL-KVSBwgdTyCgrTSuKdw5oR/edit?usp=sharing&ouid=117595194692637854707&rtpof=true&sd=true"
+     target="_blank" rel="noopener" class="nav-resume-btn">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
+      <line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/>
+    </svg>
+    Resume
+  </a>
+</nav>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<section id="hero">
+  <div class="hero-deco hero-deco-1"></div>
+  <div class="hero-deco hero-deco-2"></div>
+  <div class="hero-deco hero-deco-3"></div>
+  <div class="hero-deco hero-deco-4"></div>
+
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Available for immediate joining
+    </div>
+
+    <h1>Aditya<br/><span>Rawat.</span></h1>
+
+    <p class="hero-sub">
+      Data Engineer building reliable ETL pipelines and data warehouse systems
+      using Python, Airflow, PySpark, and AWS. Based in Delhi, India.
+    </p>
+
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+          <circle cx="12" cy="9" r="2.5"/>
+        </svg>
+        Delhi, India
+      </div>
+      <div class="hero-meta-item">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
+        </svg>
+        BCA — Kumaun University
+      </div>
+      <div class="hero-meta-item">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+        Entry-Level / Junior DE
+      </div>
+    </div>
+
+    <div class="hero-ctas">
+      <!-- RESUME BUTTON — TOP / HERO (prominent, amber) -->
+      <a href="https://docs.google.com/document/d/14myDTssKiL-KVSBwgdTyCgrTSuKdw5oR/edit?usp=sharing&ouid=117595194692637854707&rtpof=true&sd=true"
+         target="_blank" rel="noopener" class="btn btn-accent">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/>
+        </svg>
+        View Resume
+      </a>
+
+      <a href="https://github.com/AdityaUK01" target="_blank" rel="noopener" class="btn btn-white">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+        </svg>
+        GitHub
+      </a>
+
+      <a href="https://linkedin.com/in/aditya-rawat-b6635521a" target="_blank" rel="noopener" class="btn btn-outline">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+        LinkedIn
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ SKILLS ════════════════════ -->
+<section id="skills">
+  <div class="container">
+    <div class="section-label skills-label reveal">Technical Skills</div>
+    <h2 class="section-title reveal reveal-delay-1">What I work with</h2>
+    <p class="section-desc reveal reveal-delay-2">A batch-heavy stack centered on Python and AWS, actively expanding into streaming and modern storage formats.</p>
+
+    <div class="skills-grid">
+
+      <div class="skill-card reveal reveal-delay-1">
+        <div class="skill-icon" style="background:#EFF6FF;">
+          <svg width="24" height="24" fill="none" stroke="#3B82F6" stroke-width="2" viewBox="0 0 24 24">
+            <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </div>
+        <div class="skill-category" style="color:#3B82F6;">Languages</div>
+        <h3>Programming</h3>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">SQL</span>
+        </div>
       </div>
 
-      <h1>Aditya<br/><span>Rawat.</span></h1>
-
-      <p class="hero-sub">
-        Data Engineer building reliable ETL pipelines and data warehouse systems
-        using Python, Airflow, PySpark, and AWS. Based in Delhi, India.
-      </p>
-
-      <div class="hero-meta">
-        <div class="hero-meta-item">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-          Delhi, India
+      <div class="skill-card reveal reveal-delay-2">
+        <div class="skill-icon" style="background:#ECFDF5;">
+          <svg width="24" height="24" fill="none" stroke="#10B981" stroke-width="2" viewBox="0 0 24 24">
+            <ellipse cx="12" cy="5" rx="9" ry="3"/>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+          </svg>
         </div>
-        <div class="hero-meta-item">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
-          BCA — Kumaun University
-        </div>
-        <div class="hero-meta-item">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          Entry-Level / Junior DE
+        <div class="skill-category" style="color:#10B981;">Core</div>
+        <h3>Data Engineering</h3>
+        <div class="skill-tags">
+          <span class="tag">ETL Pipelines</span>
+          <span class="tag">Data Warehousing</span>
+          <span class="tag">Star Schema</span>
+          <span class="tag">Batch Processing</span>
+          <span class="tag">Incremental Load</span>
+          <span class="tag">Data Validation</span>
         </div>
       </div>
 
-      <div class="hero-ctas">
-        <a href="https://github.com/AdityaUK01" target="_blank" class="btn btn-white">
-          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      <div class="skill-card reveal reveal-delay-3">
+        <div class="skill-icon" style="background:#FFFBEB;">
+          <svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div class="skill-category" style="color:#F59E0B;">Frameworks</div>
+        <h3>Tools & Orchestration</h3>
+        <div class="skill-tags">
+          <span class="tag">Apache Airflow</span>
+          <span class="tag">PySpark</span>
+          <span class="tag">Apache Spark</span>
+          <span class="tag">Pandas</span>
+          <span class="tag">NumPy</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal reveal-delay-4">
+        <div class="skill-icon" style="background:#EFF6FF;">
+          <svg width="24" height="24" fill="none" stroke="#3B82F6" stroke-width="2" viewBox="0 0 24 24">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div class="skill-category" style="color:#3B82F6;">Cloud</div>
+        <h3>AWS Platform</h3>
+        <div class="skill-tags">
+          <span class="tag">AWS S3</span>
+          <span class="tag">Amazon Redshift</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal reveal-delay-5">
+        <div class="skill-icon" style="background:#ECFDF5;">
+          <svg width="24" height="24" fill="none" stroke="#10B981" stroke-width="2" viewBox="0 0 24 24">
+            <ellipse cx="12" cy="5" rx="9" ry="3"/>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+          </svg>
+        </div>
+        <div class="skill-category" style="color:#10B981;">Storage & DB</div>
+        <h3>Databases</h3>
+        <div class="skill-tags">
+          <span class="tag">MySQL</span>
+          <span class="tag">Parquet</span>
+          <span class="tag">Data Partitioning</span>
+          <span class="tag">Query Optimization</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal reveal-delay-1">
+        <div class="skill-icon" style="background:#FFFBEB;">
+          <svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <div class="skill-category" style="color:#F59E0B;">Tooling & BI</div>
+        <h3>Other Tools</h3>
+        <div class="skill-tags">
+          <span class="tag">Git</span>
+          <span class="tag">Power BI</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ PROJECTS ════════════════════ -->
+<section id="projects">
+  <div class="container">
+    <div class="section-label projects-label reveal">Portfolio</div>
+    <h2 class="section-title reveal reveal-delay-1">Projects</h2>
+    <p class="section-desc reveal reveal-delay-2">End-to-end data pipelines built from scratch — real data, real architecture decisions.</p>
+
+    <div class="projects-grid">
+
+      <div class="project-card project-card-1 reveal reveal-delay-1">
+        <div class="project-card-deco" style="width:240px;height:240px;background:#3B82F6;bottom:-80px;right:-60px;"></div>
+        <span class="project-num">01</span>
+        <div class="project-header">
+          <span class="project-badge badge-blue">ETL · Airflow · AWS</span>
+        </div>
+        <h3>Retail Sales<br/>Data Warehouse</h3>
+        <div class="project-stack">
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">Apache Airflow</span>
+          <span class="stack-tag">AWS S3</span>
+          <span class="stack-tag">MySQL</span>
+          <span class="stack-tag">Pandas</span>
+        </div>
+        <ul class="project-bullets">
+          <li>ETL pipeline processing <strong>10K+ records</strong> from MySQL to AWS S3</li>
+          <li>Data cleaning: null handling, deduplication, type casting for schema consistency</li>
+          <li>Automated <strong>daily batch workflows</strong> via Airflow DAGs with retry logic</li>
+          <li>Structured S3 storage following best practices for downstream analytics</li>
+          <li>Data validation checks to enforce schema consistency across pipeline runs</li>
+          <li>Modular Python scripts for scalable and reusable data processing</li>
+        </ul>
+        <a href="https://github.com/AdityaUK01/retail-sales-data-pipeline" target="_blank" class="project-link">
+          View on GitHub
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="project-card project-card-2 reveal reveal-delay-2">
+        <div class="project-card-deco" style="width:220px;height:220px;background:#10B981;bottom:-80px;right:-60px;"></div>
+        <span class="project-num">02</span>
+        <div class="project-header">
+          <span class="project-badge badge-green">PySpark · Redshift · Parquet</span>
+        </div>
+        <h3>E-Commerce Data Lake<br/>&amp; Analytics Pipeline</h3>
+        <div class="project-stack">
+          <span class="stack-tag">PySpark</span>
+          <span class="stack-tag">Apache Spark</span>
+          <span class="stack-tag">AWS S3</span>
+          <span class="stack-tag">Amazon Redshift</span>
+          <span class="stack-tag">Airflow</span>
+          <span class="stack-tag">Parquet</span>
+          <span class="stack-tag">SQL</span>
+        </div>
+        <ul class="project-bullets">
+          <li>Three-layer data lake architecture (Raw → Cleaned → Curated) on AWS S3</li>
+          <li>Processed <strong>20K+ records</strong> with PySpark: filtering, joins, aggregations</li>
+          <li>Columnar <strong>Parquet storage</strong> for faster query performance</li>
+          <li><strong>Star schema</strong> (fact + dimension tables) in Amazon Redshift for analytics</li>
+          <li>Data partitioning to reduce query scan time and improve performance</li>
+          <li>Incremental batch processing + data validation for quality and consistency</li>
+        </ul>
+        <a href="https://github.com/AdityaUK01/ecommerce-data-pipeline" target="_blank" class="project-link">
+          View on GitHub
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ RESUME CTA BAND (mid-page) ════════════════════ -->
+<section id="resume-cta">
+  <div class="resume-cta-deco resume-cta-deco-1"></div>
+  <div class="resume-cta-deco resume-cta-deco-2"></div>
+  <div class="resume-cta-inner reveal">
+    <div class="resume-cta-text">
+      <h2>Want the full picture?</h2>
+      <p>View my complete resume — skills, projects, and certifications in one place.</p>
+    </div>
+    <a href="https://docs.google.com/document/d/14myDTssKiL-KVSBwgdTyCgrTSuKdw5oR/edit?usp=sharing&ouid=117595194692637854707&rtpof=true&sd=true"
+       target="_blank" rel="noopener" class="resume-dl-btn">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
+        <line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/>
+      </svg>
+      Open Resume
+    </a>
+  </div>
+</section>
+
+<!-- ════════════════════ CERTIFICATIONS ════════════════════ -->
+<section id="certifications">
+  <div class="container">
+    <div class="section-label certs-label reveal">Credentials</div>
+    <h2 class="section-title reveal reveal-delay-1">Certifications</h2>
+    <p class="section-desc reveal reveal-delay-2">Structured learning that directly reinforces hands-on pipeline work — not just theory.</p>
+
+    <div class="certs-grid">
+
+      <!-- ExcelR -->
+      <div class="cert-card reveal reveal-delay-1">
+        <div class="cert-logo-strip">
+          <div class="cert-company-logo logo-excelr">
+            <img src="data:image/png;base64,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" alt="ExcelR" />
+          </div>
+          <span class="cert-year-badge">2024–2025</span>
+        </div>
+
+        <h3>Data Science Certification</h3>
+        <div class="cert-issuer">ExcelR Solutions &nbsp;·&nbsp; Industry Certification Program</div>
+
+        <div class="cert-topics-label">Topics Covered</div>
+        <div class="cert-topics">
+          <span class="cert-topic-tag">Python</span>
+          <span class="cert-topic-tag">SQL</span>
+          <span class="cert-topic-tag">Statistics</span>
+          <span class="cert-topic-tag">ETL Pipeline Design</span>
+          <span class="cert-topic-tag">Apache Spark</span>
+          <span class="cert-topic-tag">AWS Cloud Workflows</span>
+          <span class="cert-topic-tag">Data Visualization</span>
+          <span class="cert-topic-tag">Machine Learning Basics</span>
+        </div>
+
+        <ul class="cert-highlights">
+          <li>Designed and executed <strong>end-to-end ETL pipelines</strong> using Python and SQL as part of coursework</li>
+          <li>Worked with <strong>Apache Spark</strong> for large-scale data processing tasks</li>
+          <li>Covered <strong>AWS cloud data workflows</strong> including S3-based data ingestion and processing patterns</li>
+          <li>Practical exposure to <strong>data cleaning, transformation, and validation</strong> techniques</li>
+          <li>Completed statistical analysis and data visualization assignments using Python libraries</li>
+        </ul>
+
+        <div class="cert-capstone">
+          <div class="cert-capstone-label">Capstone Project</div>
+          <div class="cert-capstone-title">CO₂ Emissions Analysis Pipeline — end-to-end data pipeline processing global emissions data with trend analysis and visual reporting</div>
+        </div>
+      </div>
+
+      <!-- Coursera -->
+      <div class="cert-card reveal reveal-delay-2">
+        <div class="cert-logo-strip">
+          <div class="cert-company-logo logo-coursera">Coursera</div>
+          <span class="cert-year-badge">2025</span>
+        </div>
+
+        <h3>Introduction to Data Engineering</h3>
+        <div class="cert-issuer">Coursera &nbsp;·&nbsp; Online Professional Certificate</div>
+
+        <div class="cert-topics-label">Topics Covered</div>
+        <div class="cert-topics">
+          <span class="cert-topic-tag">ETL vs ELT Design</span>
+          <span class="cert-topic-tag">Pipeline Architecture</span>
+          <span class="cert-topic-tag">Cloud Data Workflows</span>
+          <span class="cert-topic-tag">Python for DE</span>
+          <span class="cert-topic-tag">SQL for Analytics</span>
+          <span class="cert-topic-tag">Data Modeling</span>
+          <span class="cert-topic-tag">Batch Processing</span>
+          <span class="cert-topic-tag">Data Quality</span>
+        </div>
+
+        <ul class="cert-highlights">
+          <li>Studied <strong>ETL vs ELT architectural trade-offs</strong> and when to apply each pattern in real systems</li>
+          <li>Covered <strong>data pipeline design principles</strong>: modularity, idempotency, retry handling, and scheduling</li>
+          <li>Built cloud data workflows using <strong>Python and SQL</strong> to move and transform structured data</li>
+          <li>Explored <strong>data modeling concepts</strong> including star schema, normalization, and analytical query design</li>
+          <li>Covered <strong>data quality checks</strong>: schema validation, null handling, and consistency enforcement across stages</li>
+          <li>Introduced to <strong>batch vs streaming processing</strong> patterns and real-world DE role responsibilities</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ ABOUT ════════════════════ -->
+<section id="about">
+  <div class="about-deco about-deco-1"></div>
+  <div class="about-deco about-deco-2"></div>
+  <div class="container">
+    <div class="about-inner">
+      <div>
+        <div class="section-label reveal">About</div>
+        <h2 class="section-title reveal reveal-delay-1">Open to<br/>Opportunities</h2>
+        <p class="section-desc reveal reveal-delay-2">
+          BCA graduate from Kumaun University actively building toward AWS Data Engineer proficiency.
+          Open to on-site, remote, and hybrid roles across India. Available for immediate joining.
+        </p>
+      </div>
+      <div class="about-stats reveal reveal-delay-1">
+        <div class="stat-box">
+          <div class="stat-num">2+</div>
+          <div class="stat-label">End-to-End<br/>Projects</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" style="color:#FBBF24;">30K+</div>
+          <div class="stat-label">Records<br/>Processed</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" style="color:#A7F3D0;">2</div>
+          <div class="stat-label">Certifications<br/>Earned</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">Now</div>
+          <div class="stat-label">Available to<br/>Join</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">Aditya Rawat<span>.</span></div>
+        <div class="footer-tagline">Data Engineer · Delhi, India</div>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/AdityaUK01" target="_blank" rel="noopener" class="footer-link footer-link-gh">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
           GitHub
         </a>
-        <a href="https://linkedin.com/in/aditya-rawat-b6635521a" target="_blank" class="btn btn-outline">
-          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        <a href="https://linkedin.com/in/aditya-rawat-b6635521a" target="_blank" rel="noopener" class="footer-link footer-link-li">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
           LinkedIn
         </a>
-        <a href="mailto:adityarawat9917@gmail.com" class="btn btn-outline">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="https://docs.google.com/document/d/14myDTssKiL-KVSBwgdTyCgrTSuKdw5oR/edit?usp=sharing&ouid=117595194692637854707&rtpof=true&sd=true"
+           target="_blank" rel="noopener" class="footer-link footer-link-dl">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/>
+          </svg>
+          Resume
+        </a>
+        <a href="mailto:adityarawat9917@gmail.com" class="footer-link footer-link-mail">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
           Email
         </a>
       </div>
     </div>
-  </section>
 
-  <!-- SKILLS -->
-  <section id="skills">
-    <div class="container">
-      <div class="section-label skills-label reveal">Technical Skills</div>
-      <h2 class="section-title reveal reveal-delay-1">What I work with</h2>
-      <p class="section-desc reveal reveal-delay-2">A batch-heavy stack centered on Python and AWS, actively expanding into streaming and modern storage formats.</p>
-
-      <div class="skills-grid">
-
-        <div class="skill-card reveal reveal-delay-1">
-          <div class="skill-icon" style="background:#EFF6FF;">
-            <svg width="24" height="24" fill="none" stroke="#3B82F6" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          </div>
-          <div class="skill-category" style="color:#3B82F6;">Languages</div>
-          <h3>Programming</h3>
-          <div class="skill-tags">
-            <span class="tag">Python</span>
-            <span class="tag">SQL</span>
-          </div>
-        </div>
-
-        <div class="skill-card reveal reveal-delay-2">
-          <div class="skill-icon" style="background:#ECFDF5;">
-            <svg width="24" height="24" fill="none" stroke="#10B981" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-          </div>
-          <div class="skill-category" style="color:#10B981;">Core</div>
-          <h3>Data Engineering</h3>
-          <div class="skill-tags">
-            <span class="tag">ETL Pipelines</span>
-            <span class="tag">Data Warehousing</span>
-            <span class="tag">Star Schema</span>
-            <span class="tag">Batch Processing</span>
-            <span class="tag">Incremental Load</span>
-            <span class="tag">Data Validation</span>
-          </div>
-        </div>
-
-        <div class="skill-card reveal reveal-delay-3">
-          <div class="skill-icon" style="background:#FFFBEB;">
-            <svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <div class="skill-category" style="color:#F59E0B;">Frameworks</div>
-          <h3>Tools & Orchestration</h3>
-          <div class="skill-tags">
-            <span class="tag">Apache Airflow</span>
-            <span class="tag">PySpark</span>
-            <span class="tag">Apache Spark</span>
-            <span class="tag">Pandas</span>
-            <span class="tag">NumPy</span>
-          </div>
-        </div>
-
-        <div class="skill-card reveal reveal-delay-4">
-          <div class="skill-icon" style="background:#EFF6FF;">
-            <svg width="24" height="24" fill="none" stroke="#3B82F6" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-          </div>
-          <div class="skill-category" style="color:#3B82F6;">Cloud</div>
-          <h3>AWS Platform</h3>
-          <div class="skill-tags">
-            <span class="tag">AWS S3</span>
-            <span class="tag">Amazon Redshift</span>
-          </div>
-        </div>
-
-        <div class="skill-card reveal reveal-delay-5">
-          <div class="skill-icon" style="background:#ECFDF5;">
-            <svg width="24" height="24" fill="none" stroke="#10B981" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="12" x2="2" y2="12"/><path d="M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z"/><line x1="6" y1="16" x2="6.01" y2="16"/><line x1="10" y1="16" x2="10.01" y2="16"/></svg>
-          </div>
-          <div class="skill-category" style="color:#10B981;">Storage & DB</div>
-          <h3>Databases</h3>
-          <div class="skill-tags">
-            <span class="tag">MySQL</span>
-            <span class="tag">Parquet</span>
-            <span class="tag">Data Partitioning</span>
-            <span class="tag">Query Optimization</span>
-          </div>
-        </div>
-
-        <div class="skill-card reveal reveal-delay-1">
-          <div class="skill-icon" style="background:#FFFBEB;">
-            <svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="2" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
-          </div>
-          <div class="skill-category" style="color:#F59E0B;">Other Tools</div>
-          <h3>Tooling & BI</h3>
-          <div class="skill-tags">
-            <span class="tag">Git</span>
-            <span class="tag">Power BI</span>
-          </div>
-        </div>
-
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Aditya Rawat. All rights reserved.</div>
+      <div class="avail-pill">
+        <span class="avail-dot"></span>
+        Available for immediate joining
       </div>
     </div>
-  </section>
+  </div>
+</footer>
 
-  <!-- PROJECTS -->
-  <section id="projects">
-    <div class="container">
-      <div class="section-label projects-label reveal">Portfolio</div>
-      <h2 class="section-title reveal reveal-delay-1">Projects</h2>
-      <p class="section-desc reveal reveal-delay-2">End-to-end data pipelines built from scratch — real data, real architecture decisions.</p>
-
-      <div class="projects-grid">
-
-        <!-- Project 1 -->
-        <div class="project-card project-card-1 reveal reveal-delay-1">
-          <div class="project-card-deco" style="width:240px;height:240px;background:#3B82F6;bottom:-80px;right:-60px;"></div>
-          <span class="project-num">01</span>
-
-          <div class="project-header">
-            <span class="project-badge badge-blue">ETL · Airflow · AWS</span>
-          </div>
-
-          <h3>Retail Sales<br/>Data Warehouse</h3>
-
-          <div class="project-stack">
-            <span class="stack-tag">Python</span>
-            <span class="stack-tag">Apache Airflow</span>
-            <span class="stack-tag">AWS S3</span>
-            <span class="stack-tag">MySQL</span>
-            <span class="stack-tag">Pandas</span>
-          </div>
-
-          <ul class="project-bullets">
-            <li>ETL pipeline processing <strong>10K+ records</strong> from MySQL to AWS S3</li>
-            <li>Data cleaning: null handling, deduplication, type casting for schema consistency</li>
-            <li>Automated <strong>daily batch workflows</strong> via Airflow DAGs with retry logic</li>
-            <li>Structured S3 storage following best practices for downstream analytics</li>
-            <li>Modular Python scripts for scalable and reusable data processing</li>
-          </ul>
-
-          <a href="https://github.com/AdityaUK01/retail-sales-data-pipeline" target="_blank" class="project-link">
-            View on GitHub
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-
-        <!-- Project 2 -->
-        <div class="project-card project-card-2 reveal reveal-delay-2">
-          <div class="project-card-deco" style="width:220px;height:220px;background:#10B981;bottom:-80px;right:-60px;"></div>
-          <span class="project-num">02</span>
-
-          <div class="project-header">
-            <span class="project-badge badge-green">PySpark · Redshift · Parquet</span>
-          </div>
-
-          <h3>E-Commerce Data Lake<br/>&amp; Analytics Pipeline</h3>
-
-          <div class="project-stack">
-            <span class="stack-tag">PySpark</span>
-            <span class="stack-tag">Apache Spark</span>
-            <span class="stack-tag">AWS S3</span>
-            <span class="stack-tag">Amazon Redshift</span>
-            <span class="stack-tag">Airflow</span>
-            <span class="stack-tag">Parquet</span>
-          </div>
-
-          <ul class="project-bullets">
-            <li>Three-layer data lake architecture (Raw → Cleaned → Curated) on AWS S3</li>
-            <li>Processed <strong>20K+ records</strong> with PySpark: filtering, joins, aggregations</li>
-            <li>Columnar <strong>Parquet storage</strong> for faster query performance</li>
-            <li><strong>Star schema</strong> (fact + dimension tables) in Amazon Redshift for analytics</li>
-            <li>Incremental batch processing + data partitioning to reduce scan time</li>
-          </ul>
-
-          <a href="https://github.com/AdityaUK01/ecommerce-data-pipeline" target="_blank" class="project-link">
-            View on GitHub
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- CERTIFICATIONS -->
-  <section id="certifications">
-    <div class="container">
-      <div class="section-label certs-label reveal">Credentials</div>
-      <h2 class="section-title reveal reveal-delay-1">Certifications</h2>
-      <p class="section-desc reveal reveal-delay-2">Structured learning complementing hands-on project work.</p>
-
-      <div class="certs-grid">
-
-        <div class="cert-card reveal reveal-delay-1">
-          <div class="cert-icon" style="background:rgba(245,158,11,0.15);">
-            <svg width="24" height="24" fill="none" stroke="#F59E0B" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          </div>
-          <h3>Data Science Certification</h3>
-          <div class="cert-issuer">ExcelR &nbsp;·&nbsp; 2024–2025</div>
-          <p class="cert-desc">Python, SQL, ETL Pipeline Design, Apache Spark, AWS Cloud Workflows. Capstone: CO₂ Emissions Analysis Pipeline.</p>
-        </div>
-
-        <div class="cert-card reveal reveal-delay-2">
-          <div class="cert-icon" style="background:rgba(59,130,246,0.15);">
-            <svg width="24" height="24" fill="none" stroke="#3B82F6" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          </div>
-          <h3>Introduction to Data Engineering</h3>
-          <div class="cert-issuer">Coursera &nbsp;·&nbsp; 2025</div>
-          <p class="cert-desc">ETL/ELT design principles, data pipeline architecture, and cloud data workflows using Python and SQL.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT / AVAILABILITY -->
-  <section id="about">
-    <div class="about-deco about-deco-1"></div>
-    <div class="about-deco about-deco-2"></div>
-    <div class="container">
-      <div class="about-inner">
-        <div>
-          <div class="section-label reveal">About</div>
-          <h2 class="section-title reveal reveal-delay-1">Open to<br/>Opportunities</h2>
-          <p class="section-desc reveal reveal-delay-2">
-            BCA graduate from Kumaun University actively building toward AWS Data Engineer proficiency.
-            Open to on-site, remote, and hybrid roles across India. Available for immediate joining.
-          </p>
-        </div>
-        <div class="about-stats reveal reveal-delay-1">
-          <div class="stat-box">
-            <div class="stat-num" style="color:#fff;">2+</div>
-            <div class="stat-label">End-to-End<br/>Projects</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-num" style="color:#FBBF24;">30K+</div>
-            <div class="stat-label">Records<br/>Processed</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-num" style="color:#A7F3D0;">2</div>
-            <div class="stat-label">Certifications<br/>Earned</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-num" style="color:#fff;">Now</div>
-            <div class="stat-label">Available to<br/>Join</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-top">
-        <div>
-          <div class="footer-brand">Aditya Rawat<span>.</span></div>
-          <div class="footer-tagline">Data Engineer · Delhi, India</div>
-        </div>
-        <div class="footer-links">
-          <a href="https://github.com/AdityaUK01" target="_blank" class="footer-link footer-link-gh">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-            GitHub
-          </a>
-          <a href="https://linkedin.com/in/aditya-rawat-b6635521a" target="_blank" class="footer-link footer-link-li">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            LinkedIn
-          </a>
-          <a href="mailto:adityarawat9917@gmail.com" class="footer-link footer-link-mail">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            adityarawat9917@gmail.com
-          </a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <div class="footer-copy">© 2025 Aditya Rawat. All rights reserved.</div>
-        <div class="avail-pill">
-          <span class="avail-dot"></span>
-          Available for immediate joining
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    reveals.forEach(el => observer.observe(el));
-  </script>
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
