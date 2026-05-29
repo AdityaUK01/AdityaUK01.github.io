@@ -719,12 +719,21 @@ function filter(cat,btn){
   });
 }
 
-function submitForm(){showToast('Message sent! I\'ll respond within 24 hours.')}
-function subscribeNL(){
-  const e=document.getElementById('nlEmail').value;
-  if(!e||!e.includes('@')){showToast('Enter a valid email address.');return;}
-  document.getElementById('nlEmail').value='';
-  showToast('Subscribed! Welcome to the newsletter.');
+async function submitForm() {
+  const res = await fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      access_key: '09f13730-bb68-4ada-8a75-eab96cb173ef',
+      name: document.querySelector('input[placeholder="John"]').value,
+      email: document.querySelector('input[type="email"]').value,
+      message: document.querySelector('textarea').value
+    })
+  });
+  const data = await res.json();
+  if (data.success) showToast('Message sent! I\'ll respond within 24 hours.');
+  else showToast('Something went wrong. Try emailing directly.');
+}
 }
 function showToast(msg){
   document.getElementById('toastMsg').textContent=msg;
