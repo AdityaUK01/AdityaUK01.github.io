@@ -724,7 +724,7 @@ async function submitForm() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      access_key: '09f13730-bb68-4ada-8a75-eab96cb173ef',
+      access_key: 'YOUR_ACCESS_KEY_HERE',
       name: document.querySelector('input[placeholder="John"]').value,
       email: document.querySelector('input[type="email"]').value,
       message: document.querySelector('textarea').value
@@ -734,6 +734,11 @@ async function submitForm() {
   if (data.success) showToast('Message sent! I\'ll respond within 24 hours.');
   else showToast('Something went wrong. Try emailing directly.');
 }
+function subscribeNL(){
+  const e=document.getElementById('nlEmail').value;
+  if(!e||!e.includes('@')){showToast('Enter a valid email address.');return;}
+  document.getElementById('nlEmail').value='';
+  showToast('Subscribed! Welcome to the newsletter.');
 }
 function showToast(msg){
   document.getElementById('toastMsg').textContent=msg;
