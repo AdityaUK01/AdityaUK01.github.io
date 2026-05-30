@@ -247,15 +247,6 @@ nav.main-nav a:hover,nav.main-nav a.active{color:var(--fg);background:var(--mute
 .fsub{width:100%;justify-content:center;height:50px;font-size:.85rem}
 .fnote{font-size:.66rem;color:var(--gray);text-align:center;margin-top:.7rem}
 
-/* ── NEWSLETTER ── */
-#newsletter{padding:3.75rem 0;background:var(--accent)}
-.nl-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.75rem}
-.nl-text h2{font-size:1.55rem;font-weight:900;letter-spacing:-.03em;color:var(--fg);margin-bottom:.3rem}
-.nl-text p{font-size:.86rem;color:rgba(17,24,39,.58);font-weight:500}
-.nl-form{display:flex;gap:.55rem;flex-wrap:wrap}
-.nl-input{font-family:'Outfit',sans-serif;font-size:.875rem;background:rgba(255,255,255,.65);border:2px solid transparent;border-radius:6px;padding:.68rem 1.1rem;color:var(--fg);outline:none;min-width:230px;transition:all .2s}
-.nl-input:focus{background:#fff;border-color:var(--fg)}
-.nl-btn{background:var(--fg);color:#fff;border:none}.nl-btn:hover{background:#1F2937}
 
 /* ── FOOTER ── */
 footer{background:#0B1120;padding:3.5rem 0 2rem}
@@ -581,15 +572,7 @@ footer{background:#0B1120;padding:3.5rem 0 2rem}
   </div>
 </section>
 
-<!-- ══ NEWSLETTER ══ -->
-<section id="newsletter">
-  <div class="container">
-    <div class="nl-inner">
-      <div class="nl-text"><h2>Stay in the loop.</h2><p>Data engineering articles, pipeline patterns and AWS tips — no spam, ever.</p></div>
-      <div class="nl-form"><input class="nl-input" type="email" id="nlEmail" placeholder="your@email.com"><button class="btn nl-btn" onclick="subscribeNL()">Subscribe</button></div>
-    </div>
-  </div>
-</section>
+
 
 <!-- ══ FOOTER ══ -->
 <footer>
@@ -928,89 +911,7 @@ async function submitForm() {
   }
 }
 
-/* ─────────────────────────────────────────
-   NEWSLETTER — FULL ERROR HANDLING
-───────────────────────────────────────── */
-async function subscribeNL() {
-  const emailInput = document.getElementById('nlEmail');
-  const email = (emailInput?.value || '').trim();
 
-  // ── Validate ──
-  if (!email) {
-    showToast('⚠️ Enter your email address to subscribe.', 'error');
-    if (emailInput) { emailInput.style.borderColor='#EF4444'; emailInput.focus(); }
-    return;
-  }
-  if (!isValidEmail(email)) {
-    showToast('⚠️ That doesn\'t look like a valid email. Try again.', 'error');
-    if (emailInput) { emailInput.style.borderColor='#EF4444'; emailInput.focus(); }
-    return;
-  }
-
-  // ── Check network ──
-  if (!navigator.onLine) {
-    showToast('No internet connection. Check your network and try again.', 'error');
-    return;
-  }
-
-  // ── Send via Web3Forms ──
-  const nlBtn = document.querySelector('.nl-btn');
-  const origText = nlBtn?.innerHTML || 'Subscribe';
-  if (nlBtn) { nlBtn.disabled=true; nlBtn.textContent='Subscribing...'; }
-
-  const controller = new AbortController();
-  const timeoutId  = setTimeout(() => controller.abort(), 10000);
-
-  try {
-    const response = await fetch(W3F_URL, {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        access_key: W3F_KEY,
-        subject:    'New Newsletter Subscriber — Portfolio',
-        name:       'Newsletter Subscriber',
-        email:      email,
-        message:    `New newsletter subscription request from: ${email}\nSubscribed from portfolio site.`,
-        botcheck:   false
-      }),
-      signal: controller.signal
-    });
-
-    clearTimeout(timeoutId);
-
-    let data;
-    try { data = await response.json(); } catch { throw new Error('PARSE_ERROR'); }
-
-    if (!response.ok) {
-      if (response.status === 429) throw new Error('RATE_LIMITED');
-      if (response.status >= 500)  throw new Error('SERVER_ERROR');
-      throw new Error('HTTP_' + response.status);
-    }
-
-    if (!data.success) throw new Error('W3F_FAILED');
-
-    // ── SUCCESS ──
-    emailInput.value = '';
-    emailInput.style.borderColor = '';
-    showToast('✅ Subscribed! Thanks for joining.', 'success');
-
-  } catch (err) {
-    clearTimeout(timeoutId);
-    const msgs = {
-      'AbortError':    'Request timed out. Check your internet and try again.',
-      'RATE_LIMITED':  'Too many attempts. Wait a few minutes and try again.',
-      'SERVER_ERROR':  'Server error. Try again in a moment.',
-      'W3F_FAILED':    'Subscription failed. Try again or email adityarawat9917@gmail.com',
-      'PARSE_ERROR':   'Unexpected response from server. Try again.'
-    };
-    const msg = msgs[err.name] || msgs[err.message] ||
-                (err.message?.includes('fetch') ? 'Network error. Check your connection.' : 'Something went wrong. Try again.');
-    showToast('❌ ' + msg, 'error');
-
-  } finally {
-    if (nlBtn) { nlBtn.disabled=false; nlBtn.innerHTML=origText; }
-  }
-}
 
 /* ─────────────────────────────────────────
    TOAST — success / error / warning types
