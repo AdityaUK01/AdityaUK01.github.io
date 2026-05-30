@@ -564,17 +564,17 @@ footer{background:#0B1120;padding:3.5rem 0 2rem}
       <div class="ct-right reveal">
         <div class="form-box">
           <div class="form-title">Send a Project Brief</div>
-          <div class="form-row"><div class="fgrp"><label>First Name</label><input type="text" placeholder="John"></div><div class="fgrp"><label>Last Name</label><input type="text" placeholder="Doe"></div></div>
-          <div class="fgrp"><label>Email</label><input type="email" placeholder="john@company.com"></div>
-          <div class="fgrp"><label>Company</label><input type="text" placeholder="Acme Corp (optional)"></div>
+          <div class="form-row"><div class="fgrp"><label>First Name *</label><input id="fFirstName" type="text" placeholder="John"></div><div class="fgrp"><label>Last Name *</label><input id="fLastName" type="text" placeholder="Doe"></div></div>
+          <div class="fgrp"><label>Email *</label><input id="fEmail" type="email" placeholder="john@company.com"></div>
+          <div class="fgrp"><label>Company</label><input id="fCompany" type="text" placeholder="Acme Corp (optional)"></div>
           <div class="form-row">
-            <div class="fgrp"><label>Type of Work</label><select><option value="">Select...</option><option>Full-Time Role</option><option>Freelance Project</option><option>ETL Pipeline Design</option><option>Data Lake Architecture</option><option>Data Warehouse Design</option><option>Other</option></select></div>
-            <div class="fgrp"><label>Timeline</label><select><option value="">Select...</option><option>Immediate</option><option>Within 1 month</option><option>1–3 months</option><option>Flexible</option></select></div>
+            <div class="fgrp"><label>Type of Work *</label><select id="fType"><option value="">Select...</option><option>Full-Time Role</option><option>Freelance Project</option><option>ETL Pipeline Design</option><option>Data Lake Architecture</option><option>Data Warehouse Design</option><option>Other</option></select></div>
+            <div class="fgrp"><label>Timeline</label><select id="fTimeline"><option value="">Select...</option><option>Immediate</option><option>Within 1 month</option><option>1–3 months</option><option>Flexible</option></select></div>
           </div>
-          <div class="fgrp"><label>Budget (freelance)</label><select><option value="">Select range...</option><option>Not applicable (full-time)</option><option>Under ₹20,000</option><option>₹20,000 – ₹50,000</option><option>₹50,000 – ₹1,00,000</option><option>Above ₹1,00,000</option></select></div>
-          <div class="fgrp"><label>Project Description</label><textarea placeholder="Briefly describe your project, data sources and expected output..."></textarea></div>
-          <button class="btn btn-primary fsub" onclick="submitForm()">Send Brief <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
-          <div class="fnote">I typically respond within 24 hours. No spam, ever.</div>
+          <div class="fgrp"><label>Budget (freelance)</label><select id="fBudget"><option value="">Select range...</option><option>Not applicable (full-time)</option><option>Under ₹20,000</option><option>₹20,000 – ₹50,000</option><option>₹50,000 – ₹1,00,000</option><option>Above ₹1,00,000</option></select></div>
+          <div class="fgrp"><label>Project Description *</label><textarea id="fMessage" placeholder="Briefly describe your project, data sources and expected output..."></textarea></div>
+          <button class="btn btn-primary fsub" id="fSubmitBtn" onclick="submitForm()">Send Brief <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+          <div class="fnote" id="fNote">* Required fields. I typically respond within 24 hours. No spam, ever.</div>
         </div>
       </div>
     </div>
@@ -719,33 +719,329 @@ function filter(cat,btn){
   });
 }
 
+/* ─────────────────────────────────────────
+   WEB3FORMS CONFIG
+───────────────────────────────────────── */
+const W3F_KEY = '09f13730-bb68-4ada-8a75-eab96cb173ef';
+const W3F_URL = 'https://api.web3forms.com/submit';
+
+/* ─────────────────────────────────────────
+   FIELD VALIDATORS
+───────────────────────────────────────── */
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim());
+}
+
+function fieldErr(id, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.borderColor = '#EF4444';
+  el.style.background  = '#FEF2F2';
+  // remove old err msg
+  const prev = el.parentNode.querySelector('.field-err');
+  if (prev) prev.remove();
+  const err = document.createElement('span');
+  err.className = 'field-err';
+  err.style.cssText = 'font-size:.65rem;color:#EF4444;font-weight:600;margin-top:.2rem;display:block';
+  err.textContent = msg;
+  el.parentNode.appendChild(err);
+}
+
+function clearFieldErr(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.borderColor = '';
+  el.style.background  = '';
+  const prev = el.parentNode.querySelector('.field-err');
+  if (prev) prev.remove();
+}
+
+function clearAllErrors() {
+  ['fFirstName','fLastName','fEmail','fType','fMessage'].forEach(clearFieldErr);
+}
+
+function setBtn(loading) {
+  const btn = document.getElementById('fSubmitBtn');
+  if (!btn) return;
+  if (loading) {
+    btn.disabled = true;
+    btn.innerHTML = '<svg width="14" height="14" style="animation:spin .8s linear infinite" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Sending...';
+  } else {
+    btn.disabled = false;
+    btn.innerHTML = 'Send Brief <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+  }
+}
+
+/* ─────────────────────────────────────────
+   SUBMIT FORM — FULL ERROR HANDLING
+───────────────────────────────────────── */
 async function submitForm() {
-  const res = await fetch('https://api.web3forms.com/submit', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      access_key: '09f13730-bb68-4ada-8a75-eab96cb173ef',
-      name: document.querySelector('input[placeholder="John"]').value,
-      email: document.querySelector('input[type="email"]').value,
-      message: document.querySelector('textarea').value
-    })
-  });
-  const data = await res.json();
-  if (data.success) showToast('Message sent! I\'ll respond within 24 hours.');
-  else showToast('Something went wrong. Try emailing directly.');
+  clearAllErrors();
+
+  // ── 1. Grab values ──
+  const firstName = (document.getElementById('fFirstName')?.value || '').trim();
+  const lastName  = (document.getElementById('fLastName')?.value  || '').trim();
+  const email     = (document.getElementById('fEmail')?.value     || '').trim();
+  const company   = (document.getElementById('fCompany')?.value   || '').trim();
+  const type      = (document.getElementById('fType')?.value      || '').trim();
+  const timeline  = (document.getElementById('fTimeline')?.value  || '').trim();
+  const budget    = (document.getElementById('fBudget')?.value    || '').trim();
+  const message   = (document.getElementById('fMessage')?.value   || '').trim();
+
+  // ── 2. Validate required fields ──
+  let hasError = false;
+
+  if (!firstName) {
+    fieldErr('fFirstName', 'First name is required');
+    hasError = true;
+  }
+  if (!lastName) {
+    fieldErr('fLastName', 'Last name is required');
+    hasError = true;
+  }
+  if (!email) {
+    fieldErr('fEmail', 'Email address is required');
+    hasError = true;
+  } else if (!isValidEmail(email)) {
+    fieldErr('fEmail', 'Enter a valid email address (e.g. john@company.com)');
+    hasError = true;
+  }
+  if (!type) {
+    fieldErr('fType', 'Please select a type of work');
+    hasError = true;
+  }
+  if (!message) {
+    fieldErr('fMessage', 'Please describe your project or requirement');
+    hasError = true;
+  } else if (message.length < 20) {
+    fieldErr('fMessage', 'Description is too short — add at least 20 characters');
+    hasError = true;
+  }
+
+  if (hasError) {
+    showToast('⚠️ Fix the highlighted fields and try again.', 'error');
+    return;
+  }
+
+  // ── 3. Check network connection ──
+  if (!navigator.onLine) {
+    showToast('No internet connection. Check your network and try again.', 'error');
+    return;
+  }
+
+  // ── 4. Build payload ──
+  const payload = {
+    access_key:  W3F_KEY,
+    subject:     `Portfolio Brief: ${type} — ${firstName} ${lastName}`,
+    from_name:   `${firstName} ${lastName}`,
+    name:        `${firstName} ${lastName}`,
+    email:       email,
+    message:     `Type of Work: ${type}\nTimeline: ${timeline || 'Not specified'}\nBudget: ${budget || 'Not specified'}\nCompany: ${company || 'Not specified'}\n\nProject Description:\n${message}`,
+    botcheck:    false   // honeypot field
+  };
+
+  // ── 5. Send with timeout ──
+  setBtn(true);
+
+  const controller = new AbortController();
+  const timeoutId  = setTimeout(() => controller.abort(), 12000); // 12s timeout
+
+  try {
+    const response = await fetch(W3F_URL, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body:    JSON.stringify(payload),
+      signal:  controller.signal
+    });
+
+    clearTimeout(timeoutId);
+
+    // ── 6. Parse response ──
+    let data;
+    try {
+      data = await response.json();
+    } catch {
+      throw new Error('PARSE_ERROR');
+    }
+
+    // ── 7. Handle HTTP error codes ──
+    if (!response.ok) {
+      if (response.status === 400) throw new Error('BAD_REQUEST');
+      if (response.status === 401) throw new Error('INVALID_KEY');
+      if (response.status === 403) throw new Error('FORBIDDEN');
+      if (response.status === 422) throw new Error('VALIDATION_FAILED');
+      if (response.status === 429) throw new Error('RATE_LIMITED');
+      if (response.status >= 500)  throw new Error('SERVER_ERROR');
+      throw new Error('HTTP_' + response.status);
+    }
+
+    // ── 8. Check Web3Forms success flag ──
+    if (!data.success) {
+      const reason = data.message || '';
+      if (reason.toLowerCase().includes('invalid'))  throw new Error('INVALID_KEY');
+      if (reason.toLowerCase().includes('limit'))    throw new Error('RATE_LIMITED');
+      throw new Error('W3F_FAILED');
+    }
+
+    // ── 9. SUCCESS ──
+    showToast('✅ Message sent! I\'ll reply within 24 hours.', 'success');
+
+    // Reset form
+    ['fFirstName','fLastName','fEmail','fCompany','fMessage'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+    ['fType','fTimeline','fBudget'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.selectedIndex = 0;
+    });
+    document.getElementById('fNote').textContent = '✅ Sent! I\'ll get back to you within 24 hours.';
+    document.getElementById('fNote').style.color = '#10B981';
+
+  } catch (err) {
+    clearTimeout(timeoutId);
+
+    // ── 10. Map every error to a clear user message ──
+    const errorMessages = {
+      'AbortError':       'Request timed out (12s). Check your internet and try again.',
+      'BAD_REQUEST':      'Something is wrong with the form data. Check your inputs and try again.',
+      'INVALID_KEY':      'Form configuration error. Please email me directly at adityarawat9917@gmail.com',
+      'FORBIDDEN':        'Access denied by server. Please email me directly at adityarawat9917@gmail.com',
+      'VALIDATION_FAILED':'Some fields failed validation. Check your email format and try again.',
+      'RATE_LIMITED':     'Too many submissions. Please wait a few minutes and try again.',
+      'SERVER_ERROR':     'Web3Forms server is down. Please email me at adityarawat9917@gmail.com',
+      'PARSE_ERROR':      'Unexpected server response. Please try again in a moment.',
+      'W3F_FAILED':       'Submission failed. Please email me directly at adityarawat9917@gmail.com',
+      'Failed to fetch':  'Network error. Check your internet connection and try again.',
+      'NetworkError':     'Network error. Check your internet connection and try again.',
+      'TypeError':        'Connection failed. Check your internet and try again.'
+    };
+
+    const msg = errorMessages[err.name] || errorMessages[err.message] ||
+                (err.message?.includes('fetch') ? errorMessages['Failed to fetch'] : null) ||
+                `Unexpected error: ${err.message || 'unknown'}. Please email adityarawat9917@gmail.com`;
+
+    showToast('❌ ' + msg, 'error');
+
+  } finally {
+    setBtn(false);
+  }
 }
-function subscribeNL(){
-  const e=document.getElementById('nlEmail').value;
-  if(!e||!e.includes('@')){showToast('Enter a valid email address.');return;}
-  document.getElementById('nlEmail').value='';
-  showToast('Subscribed! Welcome to the newsletter.');
+
+/* ─────────────────────────────────────────
+   NEWSLETTER — FULL ERROR HANDLING
+───────────────────────────────────────── */
+async function subscribeNL() {
+  const emailInput = document.getElementById('nlEmail');
+  const email = (emailInput?.value || '').trim();
+
+  // ── Validate ──
+  if (!email) {
+    showToast('⚠️ Enter your email address to subscribe.', 'error');
+    if (emailInput) { emailInput.style.borderColor='#EF4444'; emailInput.focus(); }
+    return;
+  }
+  if (!isValidEmail(email)) {
+    showToast('⚠️ That doesn\'t look like a valid email. Try again.', 'error');
+    if (emailInput) { emailInput.style.borderColor='#EF4444'; emailInput.focus(); }
+    return;
+  }
+
+  // ── Check network ──
+  if (!navigator.onLine) {
+    showToast('No internet connection. Check your network and try again.', 'error');
+    return;
+  }
+
+  // ── Send via Web3Forms ──
+  const nlBtn = document.querySelector('.nl-btn');
+  const origText = nlBtn?.innerHTML || 'Subscribe';
+  if (nlBtn) { nlBtn.disabled=true; nlBtn.textContent='Subscribing...'; }
+
+  const controller = new AbortController();
+  const timeoutId  = setTimeout(() => controller.abort(), 10000);
+
+  try {
+    const response = await fetch(W3F_URL, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: W3F_KEY,
+        subject:    'New Newsletter Subscriber — Portfolio',
+        name:       'Newsletter Subscriber',
+        email:      email,
+        message:    `New newsletter subscription request from: ${email}\nSubscribed from portfolio site.`,
+        botcheck:   false
+      }),
+      signal: controller.signal
+    });
+
+    clearTimeout(timeoutId);
+
+    let data;
+    try { data = await response.json(); } catch { throw new Error('PARSE_ERROR'); }
+
+    if (!response.ok) {
+      if (response.status === 429) throw new Error('RATE_LIMITED');
+      if (response.status >= 500)  throw new Error('SERVER_ERROR');
+      throw new Error('HTTP_' + response.status);
+    }
+
+    if (!data.success) throw new Error('W3F_FAILED');
+
+    // ── SUCCESS ──
+    emailInput.value = '';
+    emailInput.style.borderColor = '';
+    showToast('✅ Subscribed! Thanks for joining.', 'success');
+
+  } catch (err) {
+    clearTimeout(timeoutId);
+    const msgs = {
+      'AbortError':    'Request timed out. Check your internet and try again.',
+      'RATE_LIMITED':  'Too many attempts. Wait a few minutes and try again.',
+      'SERVER_ERROR':  'Server error. Try again in a moment.',
+      'W3F_FAILED':    'Subscription failed. Try again or email adityarawat9917@gmail.com',
+      'PARSE_ERROR':   'Unexpected response from server. Try again.'
+    };
+    const msg = msgs[err.name] || msgs[err.message] ||
+                (err.message?.includes('fetch') ? 'Network error. Check your connection.' : 'Something went wrong. Try again.');
+    showToast('❌ ' + msg, 'error');
+
+  } finally {
+    if (nlBtn) { nlBtn.disabled=false; nlBtn.innerHTML=origText; }
+  }
 }
-function showToast(msg){
-  document.getElementById('toastMsg').textContent=msg;
-  const t=document.getElementById('toast');
+
+/* ─────────────────────────────────────────
+   TOAST — success / error / warning types
+───────────────────────────────────────── */
+function showToast(msg, type='success') {
+  const t   = document.getElementById('toast');
+  const txt = document.getElementById('toastMsg');
+  const ico = t?.querySelector('.toast-icon');
+
+  if (!t || !txt) return;
+
+  txt.textContent = msg;
+
+  const styles = {
+    success: { bg:'#111827', icon:'✓', iconBg:'#10B981' },
+    error:   { bg:'#7F1D1D', icon:'✕', iconBg:'#EF4444' },
+    warning: { bg:'#78350F', icon:'!', iconBg:'#F59E0B' }
+  };
+  const s = styles[type] || styles.success;
+  t.style.background = s.bg;
+  if (ico) { ico.style.background=s.iconBg; ico.textContent=s.icon; }
+
   t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3500);
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), type==='error' ? 5000 : 3500);
 }
+
+/* spin animation for loading button */
+const spinStyle = document.createElement('style');
+spinStyle.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
+document.head.appendChild(spinStyle);
 
 /* mobile nav */
 function toggleMob(){document.getElementById('mobNav').classList.toggle('open')}
